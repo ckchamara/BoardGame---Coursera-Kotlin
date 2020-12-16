@@ -8,7 +8,6 @@ open class SquareBoardImpl(override val width: Int) : SquareBoard {
 
     private val arrayList = ArrayList<Cell>(width * width)
 
-
     init {
         (1..width).forEach { it ->
             (1..width).forEach { itr ->
@@ -17,25 +16,19 @@ open class SquareBoardImpl(override val width: Int) : SquareBoard {
         }
     }
 
-
     override fun getCellOrNull(i: Int, j: Int): Cell? = getAllCells().find { it -> it == Cell(i, j) }
-
 
     override fun getCell(i: Int, j: Int): Cell {
         return getAllCells().find { it -> it == Cell(i, j) } ?: throw IllegalArgumentException("Invalid Cell ($i, $j)")
     }
 
-
     override fun getAllCells(): Collection<Cell> = arrayList
-
 
     override fun getRow(i: Int, jRange: IntProgression): List<Cell> =
             jRange.filter { it <= width }.map { itr -> getCell(i, itr) }
 
-
     override fun getColumn(iRange: IntProgression, j: Int): List<Cell> =
             iRange.filter { it <= width }.map { itr -> getCell(itr, j) }
-
 
     override fun Cell.getNeighbour(direction: Direction): Cell? {
         return when (direction) {
@@ -52,9 +45,7 @@ class GameBoardImpl<T>(width: Int) : GameBoard<T>, SquareBoardImpl(width) {
 
     private val boardCells = getAllCells().map { it to null as T? }.toMap().toMutableMap()
 
-
     override fun get(cell: Cell): T? = boardCells[cell]
-
 
     override fun set(cell: Cell, value: T?) {
         boardCells[cell] = value
@@ -62,12 +53,9 @@ class GameBoardImpl<T>(width: Int) : GameBoard<T>, SquareBoardImpl(width) {
 
     override fun filter(predicate: (T?) -> Boolean): Collection<Cell> = boardCells.filterValues(predicate).keys
 
-
     override fun find(predicate: (T?) -> Boolean): Cell? = boardCells.filter { predicate(it.value) }.keys.first()
 
-
     override fun any(predicate: (T?) -> Boolean): Boolean = boardCells.any { predicate(it.value) }
-
 
     override fun all(predicate: (T?) -> Boolean): Boolean = boardCells.all { predicate(it.value) }
 
