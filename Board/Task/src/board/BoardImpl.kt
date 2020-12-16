@@ -46,8 +46,6 @@ open class SquareBoardImpl(override val width: Int) : SquareBoard {
 
 }
 
-//class GameBoardImpl<T>(width: Int) : SquareBoardImpl(width), GameBoard<T> {
-
 class GameBoardImpl<T>(width: Int): GameBoard<T>, SquareBoardImpl(width) {
 
     private val boardCells = getAllCells().map { it to null as T? }.toMap().toMutableMap()
